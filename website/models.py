@@ -21,7 +21,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    last_name = db.Column(db.String(150))
     # every time we create a note, add that note into this
     # user's note relationship
     notes = db.relationship('Note')
