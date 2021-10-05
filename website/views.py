@@ -35,3 +35,22 @@ def delete_note():
             db.session.delete(note)
             db.session.commit()
             return jsonify({})
+
+
+@views.route('/update', methods=['GET', 'POST'])
+def update_note():
+    if request.method == 'POST':
+        updating_note = Note.query.get(request.form.get('updatingNoteId'))
+        if updating_note:
+            if updating_note.user_id == current_user.id:
+                db.session.delete(updating_note)
+                db.session.commit()
+                note = request.form.get('updatingNote')
+                if len(note) < 1:
+                    flash("Note is too short.", category='error')
+                else:
+                    new_note = Note(data=note, user_id=current_user.id)
+                    db.session.add(new_note)
+                    db.session.commit()
+                    flash("Note updated!", category='success')
+    return render_template("home.html", user=current_user)

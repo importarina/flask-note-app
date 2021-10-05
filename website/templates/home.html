@@ -4,18 +4,35 @@
 <ul class="list-group list-group-flush" id="notes">
     {% for note in user.notes %}
     <li class="list-group-item">
-        {{ note.data }}
+        <a href="/update-note/{{ note.id }}" data-toggle="modal" data-target="#modaledit{{ note.id }}">{{ note.data }}</a>
         <button type="button" class="close" onClick="deleteNote({{ note.id }})">
             <span aria-hidden="true">&times;</span>
         </button>
     </li>
+    <div id="modaledit{{ note.id }}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="POST" action="{{ url_for('views.update_note') }}">
+                        <input type="hidden" name="updatingNoteId" value="{{ note.id }}">
+                        <textarea name="updatingNote" id="updatingNote" class="form-control">{{ note.data }}</textarea>
+                        <br />
+                        <div align="center">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </ul>
 <form method="POST">
     <textarea name="note" id="note" class="form-control"></textarea>
     <br />
     <div align="center">
-        <button type="submit" class="btn btn-primary"> Add Note</button>
+        <button type="submit" class="btn btn-primary">Add Note</button>
     </div>
 </form>
 {% endblock %}
