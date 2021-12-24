@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from .models import Note
-from . import db
+from .. import db
 import json
 # views is a Blueprint of our app, meaning it has a roots/urls defined inside it
 # so we don't have all of our views in one file, and we can split them up into multiple

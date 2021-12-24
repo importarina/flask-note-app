@@ -16,11 +16,11 @@ def create_app():
     # this is the flask app we are gonna use with this database
     db.init_app(app)
 
-    from .views import views
-    from .auth import auth
+    from .api.views import views
+    from .api.auth import auth
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
-    from .models import User, Note
+    from .api.models import User, Note
     create_database(app)
     login_manager = LoginManager()
     # when log in is required:
